@@ -1,16 +1,19 @@
 /* eslint-disable react/prop-types */
+
+import axios from "axios";
+
 function Header() {
   return (
     <header>
-      <a href="#">Home</a> | <a href="#recipes-index">All recipes</a> | <a href="#recipes-new">New recipe</a>
+      <a href="#">Home</a> | <a href="#posts-index">All posts</a> | <a href="#posts-new">New post</a>
     </header>
   );
 }
 
-function RecipesNew() {
+function PostsNew() {
   return (
     <div id="posts-new">
-      <h1>New recipe</h1>
+      <h1>New Post</h1>
       <form action="">
         <label htmlFor="title">Title: </label>
         <input type="text" id="title" name="title" />
@@ -23,16 +26,16 @@ function RecipesNew() {
   );
 }
 
-function RecipesIndex(props) {
+function PostsIndex(props) {
   console.log(props);
   return (
     <div id="posts-index">
-      <h1>All Recipes</h1>
-      {props.recipes.map((recipe) => (
-        <div key={recipe.id} className="recipes">
-          <h2>{recipe.title}</h2>
-          <p>{recipe.body}</p>
-          <img src={recipe.image_url} alt={recipe.title} />
+      <h1>All Posts</h1>
+      {props.posts.map((post) => (
+        <div key={post.id} className="posts">
+          <h2>{post.title}</h2>
+          <p>{post.body}</p>
+          <img src={post.image_url} alt={post.title} />
         </div>
       ))}
     </div>
@@ -40,24 +43,20 @@ function RecipesIndex(props) {
 }
 
 function Content() {
-  let recipes = [
-    {
-      id: 1,
-      title: "Apple Pie",
-      body: "Good pie!",
-      image_url: "https://www.inspiredtaste.net/wp-content/uploads/2022/11/Apple-Pie-Recipe-Video.jpg",
-    },
-    {
-      id: 2,
-      title: "Honey Biscuit",
-      body: "Good biscuit!",
-      image_url: "https://lemonsandzest.com/wp-content/uploads/2020/04/Honey-Biscuits-3.jpg",
-    },
-  ];
+  let posts = [];
+
+  const handleIndexPosts = () => {
+    axios.get("http://127.0.0.1:3000/posts.json").then((response) => {
+      console.log(response.data);
+      posts = response.data;
+    });
+  };
+
   return (
     <div>
-      <RecipesNew />
-      <RecipesIndex recipes={recipes} />
+      <PostsNew />
+      <button onClick={handleIndexPosts}>Load posts</button>
+      <PostsIndex posts={posts} />
     </div>
   );
 }
