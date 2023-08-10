@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 function Header() {
   return (
@@ -35,7 +36,7 @@ function PostsIndex(props) {
         <div key={post.id} className="posts">
           <h2>{post.title}</h2>
           <p>{post.body}</p>
-          <img src={post.image_url} alt={post.title} />
+          <img src={post.image} alt={post.title} />
         </div>
       ))}
     </div>
@@ -43,19 +44,23 @@ function PostsIndex(props) {
 }
 
 function Content() {
-  let posts = [];
+  // let posts = [];
+  const [posts, setPosts] = useState([]);
 
   const handleIndexPosts = () => {
     axios.get("http://127.0.0.1:3000/posts.json").then((response) => {
       console.log(response.data);
-      posts = response.data;
+      // posts = response.data;
+      setPosts(response.data);
     });
   };
+
+  useEffect(handleIndexPosts, []);
 
   return (
     <div>
       <PostsNew />
-      <button onClick={handleIndexPosts}>Load posts</button>
+      {/* <button onClick={handleIndexPosts}>Load posts</button> */}
       <PostsIndex posts={posts} />
     </div>
   );
