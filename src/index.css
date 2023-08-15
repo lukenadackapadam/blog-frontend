@@ -1,3 +1,13 @@
+#root {
+  font-family: "Didot LT STD", "Hoefler Text", "Garamond", "Times New Roman", "serif";
+  background-image: url(./assets/leaves.webp);
+}
+
+hr {
+  border: none;
+  height: 3px;
+}
+
 #posts-index img {
   width: 300px;
 }
