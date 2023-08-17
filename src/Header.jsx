@@ -7,6 +7,30 @@ import { LogoutLink } from "./LogoutLink";
 export function Header() {
   const [isSignupVisible, setIsSignupVisible] = useState(false);
 
+  let authenticationLinks;
+  if (localStorage.jwt === undefined) {
+    authenticationLinks = (
+      <>
+        <li className="nav-item">
+          <a className="nav-link active" aria-current="page">
+            <Link to="/signup">Signup</Link>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link active" aria-current="page">
+            <Link to="/login">Login</Link>
+          </a>
+        </li>
+      </>
+    );
+  } else {
+    authenticationLinks = (
+      <li>
+        <LogoutLink />
+      </li>
+    );
+  }
+
   const handleSignupShow = () => {
     setIsSignupVisible(true);
   };
@@ -46,23 +70,24 @@ export function Header() {
                   <Link to="/about">About</Link>
                 </a>
               </li>
-              <li className="nav-item">
+              {authenticationLinks}
+              {/* <li className="nav-item">
                 <a className="nav-link active" aria-current="page">
                   <Link to="/signup">Signup</Link>
                 </a>
-              </li>
-              <li className="nav-item">
+              </li> */}
+              {/* <li className="nav-item">
                 <a className="nav-link active" aria-current="page">
                   <Link to="/login">Login</Link>
                 </a>
-              </li>
-              <li className="nav-item">
+              </li> */}
+              {/* <li className="nav-item">
                 <a className="nav-link active" aria-current="page">
                   <li>
                     <LogoutLink />
                   </li>
                 </a>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page">
                   <Link to="/new_post">New Post</Link>
